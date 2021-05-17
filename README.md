@@ -11,7 +11,8 @@
 │  ├──  Makefile
 │  ├──  private.key -> keys/private.key // MISSING
 │  ├──  public.key -> keys/public.key
-│  ├──  readme.txt
+│  ├──  readme.txt 
+│  ├──  secret.h // MISSING
 │  ├──  self-signed-cert
 │  └──  tools
 ├──  README.md
