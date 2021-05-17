@@ -1,0 +1,3 @@
+./keys/private.key
+./self-signed-cert/key.pem
+build

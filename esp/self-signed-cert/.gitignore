@@ -1,0 +1,2 @@
+# Additional gitignore because I don't know how git handles symlinks
+./key.pem
