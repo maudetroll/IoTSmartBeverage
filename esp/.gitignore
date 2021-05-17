@@ -1,3 +1,4 @@
-./keys/private.key
-./self-signed-cert/key.pem
+keys/private.key
+self-signed-cert/key.pem
+secret.h
 build
