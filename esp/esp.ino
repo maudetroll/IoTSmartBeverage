@@ -114,7 +114,7 @@ MDzQIfCSABx+3WG76mDs8L/4HUQj5AKpq0u8uVgMwUGnzGHfy1SGCrHo5OiPDViz
 -----END PUBLIC KEY-----
 )EOF";
 
-const char secret[] PROGMEM = R"EOF(a&1y+Z_mbR\!dxTO'56!i@KKxC?BTAF~&1TBZ$$xh_em@jM*8_|n'V"JfS3/qj$t)EOF";
+#include "secret.h"
 
 #if MANUAL_SIGNING
 BearSSL::PublicKey *signPubKey = nullptr;
@@ -243,7 +243,7 @@ int update(char *update_file_address) {
   // TODO Do all ESPs have this LED?
   ESPhttpUpdate.setLedPin(LED_BUILTIN, LOW);
 
-  String header = base64::encode(version + "::" + secret);
+  String header = base64::encode(version + "::" + SECRET);
   t_httpUpdate_return ret =
       ESPhttpUpdate.update(client, update_file_address, header.c_str());
   //    ESPhttpUpdate.update(client, "https://server/file.bin", VERSION); TODO remove was original
