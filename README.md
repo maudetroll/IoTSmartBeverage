@@ -15,12 +15,12 @@
 │  ├──  self-signed-cert
 │  └──  tools
 ├──  README.md
-├──  update_server
-│  ├──  Cargo.lock
-│  ├──  Cargo.toml
-│  ├──  readme.txt
-│  ├──  self-signed-cert -> ../esp/self-signed-cert // MISSES PRIVATE KEY
-│  ├──  src
+└──  update_server
+   ├──  Cargo.lock
+   ├──  Cargo.toml
+   ├──  readme.txt
+   ├──  self-signed-cert -> ../esp/self-signed-cert // MISSES PRIVATE KEY
+   └──  src
 ```
 
 ## TODO: 
