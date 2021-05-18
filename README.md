@@ -21,7 +21,8 @@
    ├──  Cargo.toml
    ├──  readme.txt
    ├──  self-signed-cert -> ../esp/self-signed-cert // MISSES PRIVATE KEY
-   └──  src
+   ├──  src
+   └──  test-request.sh
 ```
 
 ## TODO: 
