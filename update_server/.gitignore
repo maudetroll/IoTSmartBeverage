@@ -1,1 +1,5 @@
 /target
+/src/secret/secret.rs
+to_encode
+should-not-work
+should-work
