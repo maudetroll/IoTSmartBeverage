@@ -10,7 +10,7 @@ curl \
 -H "x-ESP8266-sdk-version: 1.3.0" \
 -H "x-ESP8266-version: ${BASE64_VERSION_SECRET}" \
 -H "x-ESP8266-mode: sketch" \
-https://localhost:8080/update --cacert ./self-signed-cert/cert.pem > should-not-work
+https://localhost:8080/update --cacert ../self-signed-cert/cert.pem > should-not-work
 
 # Second should work -> MD5 does not matches
 curl \
@@ -24,4 +24,4 @@ curl \
 -H "x-ESP8266-sdk-version: 1.3.0" \
 -H "x-ESP8266-version: ${BASE64_VERSION_SECRET}" \
 -H "x-ESP8266-mode: sketch" \
-https://localhost:8080/update --cacert ./self-signed-cert/cert.pem > should-work
+https://localhost:8080/update --cacert ../self-signed-cert/cert.pem > should-work
