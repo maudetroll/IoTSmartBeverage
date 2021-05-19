@@ -114,7 +114,7 @@ async fn main() -> std::io::Result<()> {
     // load ssl keys
     // to create a self-signed temporary cert for testing:
     // `openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365 -subj '/CN=localhost'`
-    let mut ssl_builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+    let mut ssl_builder = SslAcceptor::mozilla_modern(SslMethod::tls()).unwrap();
     let path = String::from("./self-signed-cert/");
     ssl_builder
         .set_private_key_file(path.to_string().clone() + "key.pem", SslFiletype::PEM)
