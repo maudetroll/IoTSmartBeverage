@@ -1,25 +1,19 @@
 use std::fs::File;
 use std::io::BufReader;
-use std::io::prelude::Read;
-
-use env_logger::{Builder, WriteStyle};
-use log::LevelFilter;
-use log::{debug, warn};
 
 use actix_web::{
     get, http::HeaderMap, web, App, Error, HttpRequest, HttpResponse, HttpServer, Responder,
 };
+use base64;
 use futures::{future::ok, stream::once};
-
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 mod secret;
 use crate::secret::secret::SECRET;
-
-use base64;
+use env_logger::{Builder, WriteStyle};
+use log::LevelFilter;
+use log::{debug, warn};
 use md5;
-
-use rustls::internal::pemfile::{certs, pkcs8_private_keys};
-use rustls::{NoClientAuth, ServerConfig};
-
+use std::io::prelude::Read;
 
 static CURRENT_VERSION: &str = "VERSION_0.0.0";
 static CURRENT_PATH: &str = "srv/esp-builds/latest.ino.bin.signed";
@@ -119,19 +113,20 @@ async fn main() -> std::io::Result<()> {
         .filter(None, LevelFilter::Info)
         .write_style(WriteStyle::Always)
         .init();
-
     // load ssl keys
     // to create a self-signed temporary cert for testing:
     // `openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365 -subj '/CN=localhost'`
-    let mut config = ServerConfig::new(NoClientAuth::new());
-    let cert_file = &mut BufReader::new(File::open("./self-signed-cert/cert.pem").unwrap());
-    let key_file = &mut BufReader::new(File::open("./self-signed-cert/key.pem").unwrap());
-    let cert_chain = certs(cert_file).unwrap();
-    let mut keys = pkcs8_private_keys(key_file).unwrap();
-    config.set_single_cert(cert_chain, keys.remove(0)).unwrap();
+    let mut ssl_builder = SslAcceptor::mozilla_modern(SslMethod::tls()).unwrap();
+    let path = String::from("./self-signed-cert/");
+    ssl_builder
+        .set_private_key_file(path.to_string().clone() + "keyshortip.pem", SslFiletype::PEM)
+        .unwrap();
+    ssl_builder
+        .set_certificate_chain_file(path.to_string().clone() + "certshortip.pem")
+        .unwrap();
 
     HttpServer::new(|| App::new().service(update).route("/", web::get().to(index)))
-        .bind_rustls("127.0.0.1:8080", config)?
+        .bind_openssl("192.168.178.123:8080", ssl_builder)?
         .run()
         .await
 }
