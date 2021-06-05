@@ -1,19 +1,25 @@
 use std::fs::File;
 use std::io::BufReader;
+use std::io::prelude::Read;
+
+use env_logger::{Builder, WriteStyle};
+use log::LevelFilter;
+use log::{debug, warn};
 
 use actix_web::{
     get, http::HeaderMap, web, App, Error, HttpRequest, HttpResponse, HttpServer, Responder,
 };
-use base64;
 use futures::{future::ok, stream::once};
-use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+
 mod secret;
 use crate::secret::secret::SECRET;
-use env_logger::{Builder, WriteStyle};
-use log::LevelFilter;
-use log::{debug, warn};
+
+use base64;
 use md5;
-use std::io::prelude::Read;
+
+use rustls::internal::pemfile::{certs, pkcs8_private_keys};
+use rustls::{NoClientAuth, ServerConfig};
+
 
 static CURRENT_VERSION: &str = "VERSION_0.0.0";
 static CURRENT_PATH: &str = "srv/esp-builds/latest.ino.bin.signed";
@@ -113,6 +119,7 @@ async fn main() -> std::io::Result<()> {
         .filter(None, LevelFilter::Info)
         .write_style(WriteStyle::Always)
         .init();
+
     // load ssl keys
     // to create a self-signed temporary cert for testing:
     // `openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365 -subj '/CN=localhost'`

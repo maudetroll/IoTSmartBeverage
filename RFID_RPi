@@ -1,0 +1,21 @@
+1. Verbinden nach Layout in der Anleitung
+2. Aktivieren von SPI im PI
+3. Installieren von SpiDEv mit Pip3
+4. Installieren von MFRC522 -> RFID Library mit Pip3
+5. unten steheneden Code in ein Python3 Skript uebernehmen
+6. Ausfuehren
+
+
+import RPi.GPIO as GPIO
+from mfrc522 import SimpleMFRC522
+
+reader= SimpleMFRC522()
+
+try:
+        id,text= reader.read()
+        print(id)
+        print(text)
+        reader.write("Namen eingeben")
+        
+finally:
+        GPIO.cleanup()
