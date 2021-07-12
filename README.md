@@ -12,26 +12,24 @@ git submodule update --init
 ## Current Structure
 
 ```
- .
-├──  esp
-│  ├──  data
-│  ├──  esp.ino
-│  ├──  keys
-│  ├──  Makefile
-│  ├──  private.key -> keys/private.key // MISSING
-│  ├──  public.key -> keys/public.key
-│  ├──  readme.txt 
-│  ├──  secret.h // MISSING
-│  ├──  self-signed-cert
-│  └──  tools
-├──  README.md
-└──  update_server
-   ├──  Cargo.lock
-   ├──  Cargo.toml
-   ├──  readme.txt
-   ├──  self-signed-cert -> ../esp/self-signed-cert // MISSES PRIVATE KEY
-   ├──  src
-   └──  test-request.sh
+.
+├── balena-containers           <- Balena Project
+│   ├── backend
+│   ├── docker-compose.yml        <- Main docker-compose.yml
+│   ├── mosquitto
+│   ├── mysql
+│   ├── mysql-data
+│   ├── raspberrypirfid
+│   └── update-server
+├── beverage-backend-spring     <- Backend Submodule
+├── blog                        <- Dir containing posts that are on Github
+│   └── iot-blog-posts-mulc
+├── esp-code                    <- Code for the esp8622 microcontroller
+│   ├── barhardware
+│   └── bierdeckel
+├── README.md
+└── tools                       <- Dir for potential tools
+    └── keys
 ```
 
 ## TODO:
