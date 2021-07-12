@@ -1,6 +1,6 @@
-[submodule "backend"]
-	path = backend
+[submodule "beverage-backend-spring"]
+	path = beverage-backend-spring
 	url = https://github.com/buermarc/beverage-backend-spring
-[submodule "blog/posts-mulc"]
-	path = blog/posts-mulc
+[submodule "blog/iot-blog-posts-mulc"]
+	path = blog/iot-blog-posts-mulc
 	url = https://github.com/buermarc/iot-blog-posts
