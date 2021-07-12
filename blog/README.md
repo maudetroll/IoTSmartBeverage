@@ -1,1 +1,1 @@
-Dir for blogs
+Directory for blogs
