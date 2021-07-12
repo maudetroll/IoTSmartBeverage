@@ -32,17 +32,24 @@ git submodule update --init
     └── keys
 ```
 
-## TODO:
-Download Balena Image
+## Instructions:
+# Download Balena Image
 1. Register in Balena.io
 2. Download Image for Raspberry PI 4B and install it to SD Card using Balena Etcher
 
-Flash ESP Code
+# Flash ESP Code
 1. Download ESP8266_Code.cpp and 
 2. Set Wifi SSID and Password
 3. Flash it onto ESP8266 using Arduino IDE
 4. Check with predefined weight if values are realistic
 
+# Start the backend for debugging
+1. Clone the repository to local file
+2. Start with Eclipse oder gradle bootRun
+3. You need to have MySQL and a MQTT-Server running
+4. In the final product: The backend, mqtt server and the database are installed on the raspberry pi using balena cloud 
 
 
+# Documentation
+see https://www.iot-embedded.de/iot-2021/category/beverage-monitoring/ 
 
