@@ -1,5 +1,14 @@
 # Beverage Monitoring
 
+## Submodules
+
+We use two submodules, to load them if the repo has already been cloned:
+
+```shell
+git submodule update --init
+```
+
+
 ## Current Structure
 
 ```
