@@ -1,0 +1,22 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-node
+# Defines our working directory in container
+WORKDIR /usr/src/app
+
+RUN install_packages wget
+
+RUN apt-get update -y \
+    && apt-get install nodejs
+
+
+# Copy necessary files to the current working directory
+
+COPY ./server.js ./
+COPY ./package.json ./
+COPY ./package-lock.json ./
+COPY ./firmware.bin.signed ./
+COPY ./secrets ./secrets
+
+RUN npm install
+
+# server.js will run when container starts up on the device
+CMD ["npm", "start"]

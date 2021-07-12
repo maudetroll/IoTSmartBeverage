@@ -1,0 +1,79 @@
+version: '2'
+volumes:
+    mosquitto:
+    mysql-data:
+services:
+  raspberrypirfid:
+    build: ./raspberrypirfid
+    privileged: true
+    expose:
+      - "80"
+    environment:
+    - MQTT_SA=<MQTT_SA>
+    - MQTT_SP=<MQTT_SP>
+  update-server:
+    build: ./update-server
+    expose:
+    - "8081"
+    ports:
+    - "0.0.0.0:8081:8081"
+    networks:
+    - default
+    - mosquitto
+    mosquitto:
+      image: eclipse-mosquitto:1.6.14
+      hostname: mosquitto
+      container_name: mosquitto
+      expose:
+        - "<MQTT_SP>"
+        - "9001"
+      ports:
+        - "0.0.0.0:<MQTT_SP>:<MQTT_SP>"
+        - "0.0.0.0:9001:9001"
+      volumes:
+        - mosquitto:/mosquitto/config/
+      networks:
+        - default
+        - mosquitto
+      mysql:
+        image: jsurf/rpi-mariadb:latest
+        hostname: mysql
+        container_name: mysql
+        expose:
+          - "<MYSQL_SP>"
+        ports:
+          - "0.0.0.0:<MYSQL_SP>:<MYSQL_SP>"
+        environment:
+          - MYSQL_ROOT_PASSWORD=<MYSQL_ROOT_PASSWORD>
+        volumes:
+          - mysql-data:/var/lib/mysql
+        networks:
+        - default
+        - mysql
+      mysql-fill:
+        build: ./mysql
+        container_name: mysql-fill
+        networks:
+          - default
+          - mysql
+        backend:
+        build: ./backend
+        expose:
+          - "8080"
+        ports: 
+          - "0.0.0.0:8080:8080"
+        environment:
+          - MQTT_SA=<MQTT_SA>
+          - MQTT_SP=<MQTT_SP>
+          - MYSQL_SA=<MYSQL_SA>
+          - MYSQL_SP=<MYSQL_SP>
+          - MYSQL_ROOT_PASSWORD=<MYSQL_ROOT_PASSWORD>
+          - MYSQL_U=<MYSQL_U>
+          - MYSQL_P=${MYSQL_P}
+        networks:
+          - default
+networks:
+  mysql:
+    driver: "bridge"
+  mosquitto:
+    driver: "bridge"

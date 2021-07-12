@@ -1,0 +1,25 @@
+#!/bin/bash
+# Dummy vars, only used in dev and debug environment
+export MYSQL_P=1234
+export MYSQL_SA=mysql
+export MYSQL_SP=3306
+export MYSQL_U=iot
+export MYSQL_DB=app
+export MQTT_SA=mosquitto
+export MQTT_SP=1883
+
+# sed 's/${MYSQL_P}/1234/g' ./docker-compose.yml-with-envvars > ./docker-compose.yml
+# sed -i 's/${MYSQL_SA}/mysql/g' ./docker-compose.yml
+# sed -i 's/${MYSQL_SP}/3306/g' ./docker-compose.yml
+# sed -i 's/${MYSQL_U}/iot/g' ./docker-compose.yml
+# sed -i 's/${MYSQL_DB}/app/g' ./docker-compose.yml
+# sed -i 's/${MQTT_SA}/mosquitto/g' ./docker-compose.yml
+# sed -i 's/${MQTT_SP}/1883/g' ./docker-compose.yml
+sed "s/<MYSQL_P>/${MYSQL_P}/g" ./docker-compose-LAYOUT.yml > test-compose
+sed -i "s/<MYSQL_SA>/${MYSQL_SA}/g"     test-compose
+sed -i "s/<MYSQL_SP>/${MYSQL_SP}/g"     test-compose
+sed -i "s/<MYSQL_U>/${MYSQL_U}/g"       test-compose
+sed -i "s/<MYSQL_DB>/${MYSQL_DB}/g"     test-compose
+sed -i "s/<MQTT_SA>/${MQTT_SA}/g"       test-compose
+sed -i "s/<MQTT_SP>/${MQTT_SP}/g"       test-compose
+sed -i "s/<MQTT_P>/${MQTT_P}/g"         test-compose

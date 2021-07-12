@@ -1,0 +1,29 @@
+#FROM jsurf/rpi-mariadb
+FROM balenalib/%%BALENA_MACHINE_NAME%%-alpine
+
+RUN install_packages mysql-client
+
+
+ARG MYSQL_U
+ARG MYSQL_P
+ARG MYSQL_ROOT_PASSWORD
+ARG MYSQL_SA
+ARG MYSQL_SP
+ARG MYSQL_DB
+
+WORKDIR /usr/share/work
+COPY ./mysql-init/01-user-and-permissions.sql /usr/share/work
+COPY ./mysql-init/02-mariadb-dump.sql /usr/share/work
+COPY ./mysql-init/03-data.sql /usr/share/work
+COPY ./mysql-init/do.sh /usr/share/work
+
+RUN sed -i "s/MYSQL_U/${MYSQL_U}/" /usr/share/work/*
+RUN sed -i "s/MYSQL_P/${MYSQL_P}/" /usr/share/work/*
+RUN sed -i "s/MYSQL_DB/${MYSQL_DB}/" /usr/share/work/*
+RUN sed -i "s/MYSQL_ROOT_PASSWORD/${MYSQL_ROOT_PASSWORD}/" /usr/share/work/*
+RUN sed -i "s/MYSQL_SA/${MYSQL_SA}/" /usr/share/work/*
+RUN sed -i "s/MYSQL_SP/${MYSQL_SP}/" /usr/share/work/*
+
+RUN chmod +x /usr/share/work/do.sh
+
+CMD /usr/share/work/do.sh

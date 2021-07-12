@@ -1,0 +1,14 @@
+build-variables:
+  global:
+    - MYSQL_ROOT_PASSWORD=1234
+    - MYSQL_P=1234
+    - MYSQL_SA=mysql
+    - MYSQL_SP=3306
+    - MYSQL_U=iot
+    - MYSQL_DB=app
+    - MQTT_SA=mosquitto
+    - MQTT_SP=1883
+  build-secrets:
+    global:
+      - source: secret-file
+        dest: dest-secret-file
