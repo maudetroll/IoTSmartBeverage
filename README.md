@@ -43,7 +43,6 @@ Flash ESP Code
 3. Flash it onto ESP8266 using Arduino IDE
 4. Check with predefined weight if values are realistic
 
-Install Containers to Raspberry PI using Balena
- --todo--
+
 
 
